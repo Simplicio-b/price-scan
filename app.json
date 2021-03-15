@@ -1,0 +1,12 @@
+{
+  "name": "price-scan",
+  "displayName": "price-scan",
+  "expo": {
+    "name": "price-scan",
+    "slug": "price-scan",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}

@@ -1,17 +1,55 @@
-import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 
 // components
-import { Text, View } from 'react-native'
 import {
-  Container
+  Container,
+  LogoTitle,
+  Btn,
+  LblBnt
 } from '../../components'
+
+import {
+  Header,
+  Body
+} from './styles'
 
 export default function Home() {
   return (
     <Container bg="#F5F5F5">
-      <Text>Homes</Text>
-      <StatusBar style="auto" />
+
+      <Header>
+        <LogoTitle>PRICE SCAN </LogoTitle>
+      </Header>
+
+      <Body>
+
+        <Btn 
+          style={{
+            elevation: 10,
+            marginBottom: 30 
+          }}
+          bg="#5807B8"
+          activeOpacity={0.8}
+        >
+          <LblBnt cor="#fff">
+            SCAN
+          </LblBnt>
+        </Btn>
+
+
+        <Btn  
+          style={{
+            elevation: 10,
+          }}
+          bg="#5807B8"
+          activeOpacity={0.8}
+        >
+          <LblBnt cor="#FFF">
+            CODIGO DE BARRAS
+          </LblBnt>
+        </Btn>
+
+      </Body>
     </Container>
   )
 }

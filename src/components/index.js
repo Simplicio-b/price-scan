@@ -7,5 +7,28 @@ import {
 export const Container = styled.SafeAreaView `
     flex: 1;
     background-color: ${e => e.bg || '#FFF'};
-    padding-top: ${Platform.OS === 'android' ? 20 : 0}px;
+    padding-top: ${Platform.OS === 'android' ? 15 : 0}px;
+`
+
+export const LogoTitle = styled.Text `
+    font-size: 36px;
+    color: ${e => e.cor || "#5807B8"};
+    font-weight: 700;
+    font-family: 'Roboto';
+`
+
+export const Btn = styled.TouchableOpacity `
+    height: 45px;
+    width: 100%;
+    background-color: ${e => e.bg || '#c4c4c4'};
+    border-radius: 15px ;
+    justify-content: center;
+    align-items: center;
+
+`
+
+export const LblBnt = styled.Text `
+    font-size: 18px;
+    font-weight: 600;
+    color: ${e => e.cor || "#000"};
 `

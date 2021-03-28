@@ -13,7 +13,7 @@ import {
   Body
 } from './styles'
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <Container bg="#F5F5F5">
 
@@ -30,6 +30,7 @@ export default function Home() {
           }}
           bg="#5807B8"
           activeOpacity={0.8}
+          onPress={() => navigation.navigate('Scan')}
         >
           <LblBnt cor="#fff">
             SCAN
@@ -43,6 +44,7 @@ export default function Home() {
           }}
           bg="#5807B8"
           activeOpacity={0.8}
+          onPress={() => navigation.navigate('WriteCodBar')}
         >
           <LblBnt cor="#FFF">
             CODIGO DE BARRAS

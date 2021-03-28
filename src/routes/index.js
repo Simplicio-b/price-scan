@@ -12,5 +12,5 @@ export default createAppContainer(
         Scan, 
         WriteCodBar, 
         ShowProduts
-    }, { initialRouteName: 'Home' })
+    }, { initialRouteName: 'WriteCodBar' })
 )

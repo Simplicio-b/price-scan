@@ -6,8 +6,7 @@ import ArrowLeft from '../../assets/arrow-left.png'
 
 // components
 import {
-  Image,
-  View
+  Image
 } from 'react-native'
 
 import {

@@ -13,8 +13,6 @@ import {
 import {
   ActivityIndicator,
   Image,
-  SafeAreaView,
-  Text
 } from 'react-native'
 
 import {

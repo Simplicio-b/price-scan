@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
+// AXIOS
+import axios from 'axios'
 
 // components
 import {
   View,
-  Text
+  Text,
+  Image
 } from 'react-native'
-
 
 import {
   Container,
   LogoTitle,
-  Btn
+  Btn,
+  LblBnt
 } from '../../components'
 
 import {
@@ -19,10 +23,28 @@ import {
   Content,
   ContentHeader,
   TextLbl,
-  Footer
+  Footer,
+  ContentTickets,
+  Ticket,
+  TicketText
 } from './styles'
 
 export default function WreiteCodBar({ navigation }) {
+  
+  const [dados, setDados] = useState(null)
+
+  useEffect(() => {
+    (async function(){
+      try {
+        const ean = navigation.state.params.data
+        const { data } = await axios.get(`http://brasilapi.simplescontrole.com.br/mercadoria/consulta/?ean=${ean}&access-token=YOUR_TOKEN&_format=json`)
+        setDados(data.return)
+      }catch(err) {
+        console.log(err)
+      }
+    })()
+  }, [])
+
   return (
     <Container bg="#F5F5F5">
       <Header>
@@ -32,8 +54,12 @@ export default function WreiteCodBar({ navigation }) {
       <Body>
         <Content>
           <ContentHeader>
-            <View style={{ height: 100, width: 100, backgroundColor: '#DDD', borderRadius: 100 }} />
-            <TextLbl>7896607100081</TextLbl>
+
+            <View style={{ height: 100, width: 100, backgroundColor: '#FFF', borderRadius: 100, justifyContent: 'center', alignItems: 'center' }}>
+              <Image source={{ uri: dados ? dados.imagem_produto : ''  }} style={{ height: 100, width: 95 }} />
+            </View>
+
+            <TextLbl>{dados ? dados.ean : '...'}</TextLbl>
           </ContentHeader>
 
           <View style={{ flex: 7, paddingTop: 20 }}>
@@ -42,14 +68,23 @@ export default function WreiteCodBar({ navigation }) {
 
             <View style={{ flexDirection: 'row', marginBottom: 20 }} >
               <TextLbl>DESCRICAO: </TextLbl>
-              <Text>COCA-COLA LIFE GLASS</Text>
+              <Text>{}</Text>
             </View>
 
-            <View style={{ flex: 1, justifyContent: 'space-around' }} >
-              <View style={{ height: 30, backgroundColor: '#909090', borderRadius: 4, elevation: 5 }} />
-              <View style={{ height: 30, backgroundColor: '#00B897', borderRadius: 4, elevation: 5 }} />
-              <View style={{ height: 30, backgroundColor: '#FF3D00', borderRadius: 4, elevation: 5 }} />
-            </View>
+            <ContentTickets>
+              <Ticket>
+                <TicketText>PREÇO BAIXO: {dados ? dados.preco_minimo : '...'} R$</TicketText>
+              </Ticket>
+              
+              <Ticket bg='#00B897'>
+                <TicketText>PREÇO MEDIO: {dados ? dados.preco_medio : '...'} R$</TicketText>
+              </Ticket>
+
+              <Ticket bg='#FF3D00'>
+                <TicketText>PREÇO ALTO: {dados ? dados.preco_maximo : '...'} R$</TicketText>
+              </Ticket>
+
+            </ContentTickets>
             
           </View>
 
@@ -61,12 +96,20 @@ export default function WreiteCodBar({ navigation }) {
           style={{ elevation: 5, width: '48%', borderRadius: 4 }}
           bg="#FF3D00" 
           activeOpacity={0.8}
-        />
+          onPress={() => navigation.navigate('Home')}
+        >
+          <LblBnt cor="#FFF" >HOME</LblBnt>
+        </Btn>
+
         <Btn 
           style={{ elevation: 5, width: '48%', borderRadius: 4 }}
           bg="#5807B8" 
           activeOpacity={0.8}
-        />
+          onPress={() => navigation.navigate('Scan')}
+        >
+          <LblBnt cor="#FFF" >CONTINUAR</LblBnt>
+        </Btn>
+
       </Footer>
     </Container>
   )

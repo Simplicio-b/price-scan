@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // icons
 import IconLupa from '../../assets/lupa.png'
@@ -23,6 +23,14 @@ import {
 } from './styles'
 
 export default function WreiteCodBar({ navigation }) {
+
+  const [code, setCode] = useState('')
+
+  const handleBtn = () => {
+    navigation.navigate('ShowProduts', { data: code })
+    setCode('')
+  }
+
   return (
     <Container bg="#F5F5F5">
 
@@ -44,6 +52,8 @@ export default function WreiteCodBar({ navigation }) {
           placeholderColor="#DDD"
           keyboardType="numeric"
           autoFocus
+          value={code}
+          onChangeText={e => setCode(e)}
         />
 
         <Btn 
@@ -52,6 +62,7 @@ export default function WreiteCodBar({ navigation }) {
           }}
           bg="#5807B8"
           activeOpacity={0.8}
+          onPress={handleBtn}
         >
           <Image source={IconLupa} style={{ height: 26, width: 26 }} />
         </Btn>

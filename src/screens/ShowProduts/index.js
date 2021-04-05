@@ -43,7 +43,7 @@ export default function WreiteCodBar({ navigation }) {
       try {
         setLoading(true)
         const ean = navigation.state.params.data
-        const { data } = await axios.get(`http://brasilapi.simplescontrole.com.br/mercadoria/consulta/?ean=${ean}&access-token=0K3oE4SfgSUPxQ3GbiSrVjz68YciENdH&_format=json`)
+        const { data } = await axios.get(`http://brasilapi.simplescontrole.com.br/mercadoria/consulta/?ean=${ean}&access-token={YOUR_TOKEN}&_format=json`)
         setDados(data.return)
         setLoading(false)
 

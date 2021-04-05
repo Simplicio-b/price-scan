@@ -13,6 +13,7 @@ import {
 import {
   ActivityIndicator,
   Image,
+  StatusBar
 } from 'react-native'
 
 import {

@@ -1,13 +1,13 @@
 import styled from 'styled-components/native'
 
 export const Header = styled.View `
-    flex: 1;
+    flex: 1.5;
     align-items: center;
     justify-content: center;
 `
 
 export const Body = styled.View `
-    flex: 9;
+    flex: 8.5;
     padding: 20px;
 `
 
@@ -20,16 +20,26 @@ export const Content = styled.View `
 `
 
 export const ContentHeader = styled.View `
-    flex: 5; 
+    flex: 4.5; 
     border-bottom-width: 1px; 
     border-bottom-color: #999999;
     align-items: center;
     justify-content: space-around;
 `
 
+export const ContentImgHeader = styled.View `
+    height: 100px; 
+    width: 100px; 
+    background-color: #FFF; 
+    border-radius: 100px; 
+    justify-content: center; 
+    align-items: center;
+`
+
 export const TextLbl = styled.Text `
     font-weight: bold; 
     font-size: 15px;
+    margin-bottom: 3px;
 `
 
 export const ContentTickets = styled.View `

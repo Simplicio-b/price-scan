@@ -7,7 +7,9 @@ import axios from 'axios'
 import {
   View,
   Text,
-  Image
+  Image,
+  Alert,
+  ActivityIndicator
 } from 'react-native'
 
 import {
@@ -22,24 +24,36 @@ import {
   Body,
   Content,
   ContentHeader,
+  ContentImgHeader,
   TextLbl,
   Footer,
   ContentTickets,
   Ticket,
-  TicketText
+  TicketText,
+
 } from './styles'
 
 export default function WreiteCodBar({ navigation }) {
   
+  const [loading, setLoading] = useState(false)
   const [dados, setDados] = useState(null)
 
   useEffect(() => {
     (async function(){
       try {
+        setLoading(true)
         const ean = navigation.state.params.data
         const { data } = await axios.get(`http://brasilapi.simplescontrole.com.br/mercadoria/consulta/?ean=${ean}&access-token=0K3oE4SfgSUPxQ3GbiSrVjz68YciENdH&_format=json`)
         setDados(data.return)
+        setLoading(false)
+
+       if(data.return === undefined) {
+        Alert.alert("Error!", "Algo inesperado aconteceu, tente novamente mais tarde!")
+       }
+       
       }catch(err) {
+        setLoading(false)
+        Alert.alert("Error!", "Algo inesperado aconteceu, tente novamente mais tarde!")
         console.log(err)
       }
     })()
@@ -55,33 +69,45 @@ export default function WreiteCodBar({ navigation }) {
         <Content>
           <ContentHeader>
 
-            <View style={{ height: 100, width: 100, backgroundColor: '#FFF', borderRadius: 100, justifyContent: 'center', alignItems: 'center' }}>
-              <Image source={{ uri: dados ? dados.imagem_produto : ''  }} style={{ height: 100, width: 95 }} />
-            </View>
+            <ContentImgHeader>
+              {
+                loading 
+                ? (<ActivityIndicator size="large" color="#666" />)
+                : (
+                  <Image 
+                    source={{ uri: dados ? dados.imagem_produto : null  }} 
+                    style={{ height: 90, width: 85 }} 
+                  />
+                )
+              }
 
-            <TextLbl>{dados ? dados.ean : '...'}</TextLbl>
+            </ContentImgHeader>
+
+            <TextLbl>
+              {dados ? dados.ean : ''}
+            </TextLbl>
           </ContentHeader>
 
-          <View style={{ flex: 7, paddingTop: 20 }}>
+          <View style={{ flex: 8, paddingTop: 15 }}>
 
-            <TextLbl style={{ textAlign: 'center', marginBottom: 15 }} >INFORMAÇÕES DO PRODUTO</TextLbl>
+            <TextLbl style={{ textAlign: 'center', marginBottom: 10 }} >INFORMAÇÕES DO PRODUTO</TextLbl>
 
-            <View style={{ flexDirection: 'row', marginBottom: 20 }} >
-              <TextLbl>DESCRICAO: </TextLbl>
-              <Text>{}</Text>
+            <View style={{ marginBottom: 15 }} >
+              <TextLbl>DESCRICAO</TextLbl>
+              <Text>{dados ? dados.nome : ''}</Text>
             </View>
 
             <ContentTickets>
               <Ticket>
-                <TicketText>PREÇO BAIXO: {dados ? dados.preco_minimo : '...'} R$</TicketText>
+                <TicketText>PREÇO BAIXO: {dados ? `${dados.preco_minimo} R$` : ''}</TicketText>
               </Ticket>
               
               <Ticket bg='#00B897'>
-                <TicketText>PREÇO MEDIO: {dados ? dados.preco_medio : '...'} R$</TicketText>
+                <TicketText>PREÇO MEDIO: {dados ? `${dados.preco_medio} R$`: ''}</TicketText>
               </Ticket>
 
               <Ticket bg='#FF3D00'>
-                <TicketText>PREÇO ALTO: {dados ? dados.preco_maximo : '...'} R$</TicketText>
+                <TicketText>PREÇO ALTO: {dados ? `${dados.preco_maximo} R$`: ''}</TicketText>
               </Ticket>
 
             </ContentTickets>
@@ -107,7 +133,7 @@ export default function WreiteCodBar({ navigation }) {
           activeOpacity={0.8}
           onPress={() => navigation.navigate('Scan')}
         >
-          <LblBnt cor="#FFF" >CONTINUAR</LblBnt>
+          <LblBnt cor="#FFF" >SCAN</LblBnt>
         </Btn>
 
       </Footer>
